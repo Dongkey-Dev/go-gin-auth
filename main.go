@@ -1,10 +1,19 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
 
 func setupRouter() *gin.Engine {
   r := gin.Default()
-  r.GET("/ping", func(c *gin.Context) {
+  public := r.Group("/api")
+  public.POST("/user", func(c *gin.Context){
+    c.JSON(http.StatusOK, gin.H{"data": "user post endpoint."})
+  })
+
+  public.GET("/ping", func(c *gin.Context) {
     c.String(200, "pong")
   })
   return r
